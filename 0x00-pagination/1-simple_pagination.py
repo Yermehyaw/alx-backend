@@ -34,10 +34,17 @@ class Server:
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """Get pages from dataset"""
-        assert page > 0 and page_size > 0
+        assert isinstance(page, int) and isinstance(page_size, int), "raised when page and/or page_size are not ints"
+
+        assert page != 0 and page_size != 0, "raised with 0"
+
+        assert page > 0 and page_size > 0, "raised with negative values"
 
         self._data_size = len(self.__dataset)
         no_pages = (self._data_size + (page_size - 1)) // page_size
+
+        if page > no_pages:
+            return []
 
         start_index = (page - 1) * page_size
         end_index = start_index + page_size
