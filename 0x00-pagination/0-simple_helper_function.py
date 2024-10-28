@@ -2,12 +2,13 @@
 """
 Return the start and end index of a paginated list
 
-Modules imported: None
+Modules imported: typing
 
 """
+from typing import Tuple
 
 
-def index_range(page: int, page_size: int):
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """Return the start and end index of a paginated list"""
     if page == 0 or page_size == 0:
         return tuple()
