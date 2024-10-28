@@ -13,6 +13,6 @@ def index_range(page: int, page_size: int):
         return tuple()
     # page is 3 and page size is 3, the length of the data set is 10 from 0-9
     start_index = (page - 1) * page_size
-    end_index = (start_index - 1) + page_size
+    end_index = start_index + page_size
 
     return (start_index, end_index)
