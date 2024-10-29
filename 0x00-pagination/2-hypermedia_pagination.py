@@ -41,6 +41,7 @@ class Server:
 
         assert page > 0 and page_size > 0
 
+        self.dataset()
         self._data_size = len(self.__dataset)
         self._no_pages = (self._data_size + (page_size - 1)) // page_size
 
