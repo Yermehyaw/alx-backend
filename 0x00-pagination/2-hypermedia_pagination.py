@@ -11,6 +11,7 @@ typing: types in python
 import csv
 import math
 from typing import List
+from typing import Dict
 
 
 class Server:
@@ -51,11 +52,11 @@ class Server:
 
         return self.__dataset[start_index:end_index]
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, int]:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, object]:
         """Hypermedia pagination, Returns a dict to the user showing
         more resources than just the one requested
         """
-        data = get_page(page, page_size)
+        data = self.get_page(page, page_size)
 
         hyper_dict = {
             'page_size': len(data),
