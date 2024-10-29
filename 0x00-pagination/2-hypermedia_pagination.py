@@ -52,7 +52,7 @@ class Server:
 
         return self.__dataset[start_index:end_index]
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, object]:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """Hypermedia pagination, Returns a dict to the user showing
         more resources than just the one requested
         """
