@@ -22,27 +22,8 @@ class BaseCaching():
         for key in sorted(self.cache_data.keys()):
             print("{}: {}".format(key, self.cache_data.get(key)))
 
-    def put(self, key, item):
-        """ Add an item in the cache
-        """
-        if not key or not item:  # if either is None
-            return
 
-        try:
-            self.cache_data.update({key: item})
-        except Exception:
-            return
-
-    def get(self, key):
-        """ Get an item by key
-        """
-        if not key or not item:  # if either is None
-            return
-
-        return self.cache_data.get(key)  # most exceptions are already handled
-
-
-class BaseCache(BaseCaching):
+class BasicCache(BaseCaching):
     """Cache data using a dict without any coe cachong algorithm
 
     Args:
@@ -63,11 +44,20 @@ class BaseCache(BaseCaching):
         super().print_cache()
 
     def put(self, key, item):
-        """Add an item in the cache
+        """ Add an item in the cache
         """
-        super().put(key, item)
+        if not key or not item:  # if either is None
+            return
+
+        try:
+            self.cache_data.update({key: item})
+        except Exception:
+            return
 
     def get(self, key):
         """ Get an item by key
         """
-        super().get(key)
+        if not key or not item:  # if either is None
+            return
+
+        return self.cache_data.get(key)  # most exceptions are already handled
