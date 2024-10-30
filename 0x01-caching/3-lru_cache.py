@@ -24,7 +24,7 @@ class LRUCache(BaseCaching):
         """Instance initializer
         """
         super().__init__()
-        self.cache_time = {}  # it should store datetimes, not count LFU is the one with count
+        self.cache_time = {}
 
     def put(self, key, item):
         """ Add an item in the cache
@@ -40,7 +40,7 @@ class LRUCache(BaseCaching):
             self.cache_data.update({key: item})
             return
 
-        # If cache limit is reached, delete one cache data object to create space
+        # cache limit is reached, delete a cache data object to create space
         if len(self.cache_time) >= BaseCaching.MAX_ITEMS:
             # get the earliest key in cache
             earliest = min(
