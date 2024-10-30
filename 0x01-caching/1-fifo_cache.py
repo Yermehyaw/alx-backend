@@ -49,12 +49,11 @@ class FIFOCache(BaseCaching):
         if not key or not item:  # if either is None
             return
 
-        if len(self.cache_index) > BaseCaching.MAX_ITEMS:
+        if len(self.cache_index) == BaseCaching.MAX_ITEMS:
             first_added = self.cache_index[0]
-            del self.cache_data[first_added]
-
-            print(f'DISCARD: {first_added}')
-            return
+            if key == first_added:
+                del self.cache_data[first_added]
+                print(f'DISCARD: {first_added}')
 
         self.cache_index.append(key)
         self.cache_data.update({key: item})
