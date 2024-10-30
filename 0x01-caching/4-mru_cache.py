@@ -1,29 +1,32 @@
 #!/usr/bin/env python3
-"""MRUCache module. Defines a LIFO cachong algo using a dict
+"""MRUCache module. Defines a LIFO caching algo using a dict
 
-Modules imported: none
+Modules imported: BaseCaching, datetime
 
 """
 from base_caching import BaseCaching
+from datetime import datetime
 
 
 class MRUCache(BaseCaching):
     """
-    MRU Caching
+    MRU(Most Recently Used) Caching system: cacge entry most
+    eecently ised is deleted first to create room
+    for more entries when cache limit is reached
 
     Args:
     None
 
     Attributes:
     cache_data(dict): Stored cache data
-    cache_count(dict): counts no of requests to data in cache
+    cache_time(dict): stores last access time of cache data
 
     """
     def __init__(self):
         """Instance initializer
         """
         super().__init__()
-        self.cache_count = {}
+        self.cache_time = {}
 
     def put(self, key, item):
         """ Add an item in the cache
@@ -35,22 +38,24 @@ class MRUCache(BaseCaching):
         if value:  # key exists
             if value == item:
                 return
-
-            self.cache_data.update({key: item})  # item diffs
+            self.cache_time.update({key: datetime.now()})
+            self.cache_data.update({key: item})
             return
 
-        if len(self.cache_count) == BaseCaching.MAX_ITEMS:
-            # get key with the highest int value
-            most = max(
-                self.cache_count,
-                key=self.cache_count.get
+        # cache limit is reached, delete a cache data object to create space
+        if len(self.cache_time) >= BaseCaching.MAX_ITEMS:
+            # get the oldest key in cache
+            oldest = max(
+                self.cache_time,
+                key=self.cache_time.get
             )
-            # remove from count
-            del self.cache_count[most]
-            # remove from data
-            del self.cache_data[most]
-            print(f'DISCARD: {most}')
 
+            del self.cache_time[oldest]
+            del self.cache_data[oldest]
+            print(f'DISCARD: {oldest}')
+
+        # Add new key, item to cache_data and cache_time
+        self.cache_time.update({key: datetime.now()})
         self.cache_data.update({key: item})
 
     def get(self, key):
@@ -59,5 +64,9 @@ class MRUCache(BaseCaching):
         if not key:  # if None
             return
 
-        self.cache_count[key] = self.cache_count.get(key, 0) + 1
+        value = self.cache_time.get(key)
+        if value:  # updates last-accessed-time
+            self.cache_time[key] = datetime.now()
+
+        # None is auto ret if key is not in cache data
         return self.cache_data.get(key)  # most exceptions are already handled
