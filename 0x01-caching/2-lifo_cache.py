@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FIFOCache module. Defines a FIFO cachong algo using a dict
+"""LIFOCache module. Defines a LIFO cachong algo using a dict
 
 Modules imported: none
 
@@ -26,15 +26,16 @@ class BaseCaching():
             print("{}: {}".format(key, self.cache_data.get(key)))
 
 
-class FIFOCache(BaseCaching):
+class LIFOCache(BaseCaching):
     """
-    FIFO Cacheing
+    LIFO Caching
 
     Args:
     None
 
     Attributes:
-    cache_dat(dict): Stored cache data
+    cache_data(dict): Stored cache data
+    cache_index(list)
 
     """
     def __init__(self):
@@ -49,7 +50,6 @@ class FIFOCache(BaseCaching):
         if not key or not item:  # if either is None
             return
 
-        # test key, item if they are already part of cache
         value = self.cache_data.get(key)  # exceptions handled
         if value:  # key exists
             if value == item:
@@ -59,10 +59,9 @@ class FIFOCache(BaseCaching):
             return
 
         if len(self.cache_index) == BaseCaching.MAX_ITEMS:
-            first_added = self.cache_index[0]
-            del self.cache_index[0]
-            del self.cache_data[first_added]
-            print(f'DISCARD: {first_added}')
+            last_added = cache_index.pop()
+            del self.cache_data[last_added]
+            print(f'DISCARD: {last_added}')
 
         self.cache_index.append(key)
         self.cache_data.update({key: item})
