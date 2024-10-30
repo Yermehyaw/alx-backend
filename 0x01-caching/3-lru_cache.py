@@ -1,29 +1,30 @@
 #!/usr/bin/env python3
-"""LRUCache module. Defines a LIFO cachong algo using a dict
+"""LRUCache module. Defines a LIFO caching algo using a dict
 
-Modules imported: none
+Modules imported: BaseCaching, datetime
 
 """
 from base_caching import BaseCaching
+from datetime import datetime
 
 
 class LRUCache(BaseCaching):
     """
-    LRU Caching
+    LRU(Least Recently Used) Caching
 
     Args:
     None
 
     Attributes:
     cache_data(dict): Stored cache data
-    cache_count(dict): counts no of requests to data in cache
+    cache_time(dict): stores last access time of cache data
 
     """
     def __init__(self):
         """Instance initializer
         """
         super().__init__()
-        self.cache_count = {}
+        self.cache_time = {}  # it should store datetimes, not count LFU is the one with count
 
     def put(self, key, item):
         """ Add an item in the cache
@@ -35,22 +36,24 @@ class LRUCache(BaseCaching):
         if value:  # key exists
             if value == item:
                 return
-
-            self.cache_data.update({key: item})  # item diffs
+            self.cache_time.update({key: datetime.now()})
+            self.cache_data.update({key: item})
             return
 
-        if len(self.cache_count) == BaseCaching.MAX_ITEMS:
-            # get key with the lowest int value
-            least = min(
-                self.cache_count,
-                key=self.cache_count.get
+        # If cache limit is reached, delete one cache data object to create space
+        if len(self.cache_time) >= BaseCaching.MAX_ITEMS:
+            # get the earliest key in cache
+            earliest = min(
+                self.cache_time,
+                key=self.cache_time.get
             )
-            # remove from count
-            del self.cache_count[least]
-            # remove from data
-            del self.cache_data[least]
-            print(f'DISCARD: {least}')
 
+            del self.cache_time[earliest]
+            del self.cache_data[earliest]
+            print(f'DISCARD: {earliest}')
+
+        # Add new key, item to cache_data and cache_time
+        self.cache_time.update({key: datetime.now()})
         self.cache_data.update({key: item})
 
     def get(self, key):
@@ -59,5 +62,9 @@ class LRUCache(BaseCaching):
         if not key:  # if None
             return
 
-        self.cache_count[key] = self.cache_count.get(key, 0) + 1
+        value = self.cache_time.get(key)
+        if value:  # updates last-accessed-time
+            self.cache_time[key] = datetime.now()
+
+        # None is auto ret if key is not in cache data
         return self.cache_data.get(key)  # most exceptions are already handled
