@@ -23,7 +23,7 @@ class LFUCache(BaseCaching):
         """Instance initializer
         """
         super().__init__()
-        self.cache_count = {}  # it should store datetimes, not count LFU is the one with count
+        self.cache_count = {}
 
     def put(self, key, item):
         """ Add an item in the cache
@@ -35,11 +35,11 @@ class LFUCache(BaseCaching):
         if value:  # key exists
             if value == item:
                 return
-            self.cache_count[key] = self.cache_count.get(key, 0) + 1  # item diffs
+            self.cache_count[key] = self.cache_count.get(key, 0) + 1
             self.cache_data.update({key: item})
             return
 
-        # If cache limit is reached, delete one cache data object to create space
+        # If cache limit is reached, delete a cache data obj to create space
         if len(self.cache_count) >= BaseCaching.MAX_ITEMS:
             # get key with the lowest int value
             least = min(
