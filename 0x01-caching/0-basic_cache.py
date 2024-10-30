@@ -57,7 +57,7 @@ class BasicCache(BaseCaching):
     def get(self, key):
         """ Get an item by key
         """
-        if not key or not item:  # if either is None
+        if not key:  # if None
             return
 
         return self.cache_data.get(key)  # most exceptions are already handled
