@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-""" BaseCaching module
+""" BaseCaching module defines a BasicCache using a simple dict without
+a cachig algorithm
+
+Modules imported: none
 """
 
 
