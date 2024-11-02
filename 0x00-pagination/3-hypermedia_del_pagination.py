@@ -46,10 +46,10 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
-        """Deletion resistant hypermedia pagination. Returns a dict of 
+        """Deletion resistant hypermedia pagination. Returns a dict of
         key-value pair describing the dataset, regardless of deletions
         """
-        indexed_data = self.indexed_dataset()
+        indexed_data = list(self.indexed_dataset().keys())
         total_indexes = len(indexed_data)
         end_idx = indexed_data[total_indexes - 1]
 
@@ -57,13 +57,13 @@ class Server:
             assert isinstance(index, int)
             assert index < total_indexes and index > 0
 
-            data = self.__datset[index: page_size - 1]
+            data = self.__dataset[index: page_size - 1]
 
         else:
             index = 0
 
-        if page_size < end_index:
-                next_index = page_size
+        if page_size < end_idx:
+            next_index = page_size
 
         return {
             'index': index,
