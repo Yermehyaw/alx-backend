@@ -45,7 +45,7 @@ class Server:
             }
         return self.__indexed_dataset
 
-    def get_hyper_index(index: int = None, page_size: int = 10) -> Dict:
+    def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """Deletion resistant hypermedia pagination. Returns a dict of 
         key-value pair describing the dataset, regardless of deletions
         """
