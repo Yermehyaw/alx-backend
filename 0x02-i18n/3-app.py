@@ -12,7 +12,7 @@ from flask import (
 )
 from flask_babel import (
     Babel,
-    gettext,
+    _,
 )
 
 
