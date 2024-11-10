@@ -9,6 +9,7 @@ from flask import (
     Flask,
     render_template,
     request,
+    Response,
 )
 from flask_babel import (
     Babel,
@@ -18,7 +19,7 @@ from flask_babel import (
 
 class Config():
     """Config for Babel obj
-    
+
     Attrributes:
     LANGUAGES: supported languages
     DEFAULT: default lang and tinezone
@@ -34,13 +35,13 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """Get the locale lang defined from url"""
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route('/')
-def index():
+def index() -> Response:
     """Homepage"""
     return render_template('0-index.html')
 
