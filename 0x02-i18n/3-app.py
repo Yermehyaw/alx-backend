@@ -18,7 +18,10 @@ from flask_babel import (
 
 class Config():
     """Config for Babel obj
-
+    
+    Attrributes:
+    LANGUAGES: supported languages
+    DEFAULT: default lang and tinezone
     """
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
