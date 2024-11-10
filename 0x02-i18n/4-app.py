@@ -9,6 +9,7 @@ from flask import (
     Flask,
     render_template,
     request,
+    Response,
 )
 from flask_babel import (
     Babel,
@@ -29,7 +30,7 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """Get the locale lang defined from url"""
     locale_arg = request.args.get('locale')
 
@@ -39,9 +40,9 @@ def get_locale():
 
 
 @app.route('/')
-def index():
+def index() -> Response:
     """Homepage"""
-    return render_template('0-index.html')
+    return render_template('4-index.html')
 
 
 if __name__ == '__main__':
