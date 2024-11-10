@@ -65,7 +65,10 @@ def before_request() -> None:
 @app.route('/')
 def index() -> Response:
     """Homepage"""
-    return render_template('0-index.html')
+    try:
+        return render_template('5-index.html', username=g.user['name'])
+    except AttributeError:
+        return render_template('5-index.html')
 
 
 def get_user() -> Union[Dict, None]:
