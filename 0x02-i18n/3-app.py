@@ -9,7 +9,6 @@ from flask import (
     Flask,
     render_template,
     request,
-    Response,
 )
 from flask_babel import (
     Babel,
@@ -35,7 +34,7 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale() -> str:
+def get_locale():
     """Get the locale lang defined from url"""
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
