@@ -66,7 +66,7 @@ def before_request() -> None:
 def index() -> Response:
     """Homepage"""
     try:
-        return render_template('5-index.html', username=g.user['name'])
+        return render_template('5-index.html')
     except AttributeError:
         return render_template('5-index.html')
 
