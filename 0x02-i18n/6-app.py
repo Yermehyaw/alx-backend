@@ -51,13 +51,14 @@ def get_locale() -> str:
         return locale_arg
 
     # followed by user settings
-    locale = g.user['locale']
-    if locale:
-        return locale
+    if 'user' in g.__dict__:
+        locale = g.user['locale']
+        if locale in app.config['LANGUAGES']:
+            return locale
 
     # then frm the request header
     locale = request.headers.get('Accept-Language')
-    if locale:
+    if locale in app.config['LANGUAGES']:
         return locale
 
     #  default locale
