@@ -3,37 +3,40 @@
  * inorder to store and retrieve data
  */
 
-import 'redis';
+import redis from 'redis';
 
-var client = redis.createClient();
 
-client.on('error', err => console.log('Redis client not connected to the server: ', err));
-
-client.on('connect', () => console.log('Redis client connected to the server'));
 
 /**
  * set values on he client
  */
 function setNewSchool(schoolName, value) {
-  if (client.isReady) {  // my Jara 
-    setTineout(() => {
-      client.set(schoolName, value);
-      redis.print('Reply: OK');
-    }, 2000);
-  }
+  const client = redis.createClient();
+  client.on('error', err => console.log('Redis client not connected to the server: ', err));
+
+  client.on('connect', () => console.log('Redis client connected to the server'));
+
+  client.on('ready', () => {
+    client.set(schoolName, value, redis.print);
+  });
 }
 
 
 /**
- * Gdt tge value of a key ib the db
+ * Get the value of a key in the db
  */
 function displaySchoolValue(schoolName) {
-  if (client.isReady) {
-    setTimeout(() => {
-      const value = client.get(schoolName);
-      console.log(value);
-    }, 2000);
-  }
+  const client = redis.createClient();
+  client.on('error', err => console.log('Redis client not connected to the server: ', err));
+  client.on('ready', () => {
+    client.get(schoolName, (err, reply) => {
+      if (err) {
+	console.log('Err occurred: ', err);
+	return;
+      }
+      console.log(reply);
+    });
+  });
 }
 
 displaySchoolValue('Holberton');
