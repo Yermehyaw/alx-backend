@@ -10,7 +10,7 @@ const data = {
 };
 const push_notification_code = kue.createQueue();
 
-const job = push_notification_code.create('Job', data);
+const job = push_notification_code.create('push_notification_code', data);
 
 // job saved successfully
 job.save((err) => {
