@@ -3,7 +3,7 @@
  */
 
 function createPushNotificationsJobs(jobs, queue) {
-  if (!job.isArray()) {
+  if (!Array.isArray(jobs)) {
     throw new Error('Jobs is not an array');
   }
 
